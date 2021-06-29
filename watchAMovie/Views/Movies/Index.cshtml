@@ -1,0 +1,104 @@
+﻿@model IEnumerable<watchAMovie.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Trending</h2>
+
+            @using (Html.BeginForm("shows", "Book", FormMethod.Post))
+            {
+                <div class="navbar-collapse form-inline navbar-header">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @Html.TextBox("search", null, new { @class = "form-control", placeholder = "City", @style = "width:400px;" })
+                    <button class="btn btn-success" type="submit">
+                        &nbsp;&nbsp;&nbsp;&nbsp;Find & book&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-search" style="font-size:20px;color:white"></i>
+                    </button>
+
+                </div><br>
+            }
+
+    <div class="container">
+        @*@Html.Partial("_CategoriesPartial")*@
+        <div style="padding:20px;margin-left:50px;margin-right:50px;">
+
+            <div class="row">
+                @{
+                    var ModelList = Model.Take(3).ToList();
+
+                    if (ModelList.Count == 0)
+                    {
+                        <p>No Products found. We are sorry.</p>
+                    }
+                    else if (ModelList.Count == 3)
+                    {
+                        <div class="row carousel-holder">
+                            <div class="col-md-12">
+                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+
+                                        @{
+                                            for (int i = 0; i < 3; i++)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="item active">
+                                                        <a href="@Url.Action("Details", "Movies", new { id = @ModelList[i].MovieID })">
+                                                            <img title="@ModelList[i].MovieName" class="slide-image" src="data:image/png;base64,@Convert.ToBase64String(@ModelList[i].Picture, 0, @ModelList[i].Picture.Length)" alt="@ModelList[i].MovieName" style="height:550px;width:100%;" />
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="item">
+                                                        <a href="@Url.Action("Details", "Movies", new { id = @ModelList[i].MovieID })">
+                                                            <img title="@ModelList[i].MovieName" class="slide-image" src="data:image/png;base64,@Convert.ToBase64String(@ModelList[i].Picture, 0, @ModelList[i].Picture.Length)" alt="@ModelList[i].MovieName" style="height:550px;width:100%;" />
+                                                        </a>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                                            }
+                }
+                <div class="row" style="margin-top:30px">
+                    @Html.Partial("_movieTabs")
+                </div>
+
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-4 col-lg-4 col-md-4" style="margin-top:120px;">
+                        <div class="thumbnail">
+                            <a href="@Url.Action("Details", "Movies", new { id = item.MovieID })">
+                                <img src="data:image/png;base64,@Convert.ToBase64String(item.Picture, 0, item.Picture.Length)" class="img-responsive img-thumbnail" style="width: 250px; height: 300px;" alt="" />
+                            </a>
+                            <div class="caption">
+                                <h4 title="@item.MovieName">
+                                    @Html.ActionLink(item.MovieName, "Details", new { id = item.MovieID })
+                                </h4>
+                                <p>Time: @Html.DisplayFor(modelItem => item.ShowingDate)<br />Genre: @Html.DisplayFor(modelItem => item.Genre)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>

@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                @Html.ActionLink("At the movies...", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View Movies", "Index", "Movies", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Add Movie", "Create", "Movies", new { area = "" }, null)</li>
+                            </ul>
+                        </li>
+                    }
+                 
+                    <li data-toggle="tooltip" title="Add Movies, View Movies, Delete Movies">
+
+                        @Html.ActionLink("View Movies", "Index", "Movies")
+                    </li>
+                    <li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Upload Trailers", "Search", "UploadResource")
+                        }
+                    </li>
+                    <li>
+
+                        @Html.ActionLink("Watch Trailers", "Search", "UploadResource")
+                    </li>
+   
+
+                    <li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Roles", "Index", "Roles")
+                        }
+                    </li>
+                    <li data-toggle="tooltip" title="Add Theatre, View Theatre ,Update Theatre,Delete Theatre ">
+
+                        @Html.ActionLink(" View Theatres", "Index", "Theatres")
+                    </li>
+                    <li>
+
+                        @if (User.IsInRole("Members"))
+                        {
+                            @Html.ActionLink("My Bookings", "My_Shows", "Book")
+                        }
+                    </li>
+
+                    <li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("View Bookings", "Index", "Tickets")
+                        }
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="margin-top:100px">
+        <!-- ***** Preloader Start ***** -->
+        @RenderBody()
+        <footer>
+            <p>&copy; @DateTime.Now.Year - At the movies...</p>
+        </footer>
+    </div>
+    <!-- jQuery -->
+    <script src="~/Scripts/js/jquery-2.1.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="~/Scripts/js/popper.js"></script>
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="~/Scripts/js/scrollreveal.min.js"></script>
+    <script src="~/Scripts/js/waypoints.min.js"></script>
+    <script src="~/Scripts/js/jquery.counterup.min.js"></script>
+    <script src="~/Scripts/js/imgfix.min.js"></script>
+    <script src="~/Scripts/js/mixitup.js"></script>
+    <script src="~/Scripts/js/accordions.js"></script>
+    <!-- Global Init -->
+    <script src="~/Scripts/js/custom.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

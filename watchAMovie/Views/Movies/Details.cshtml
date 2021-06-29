@@ -1,0 +1,60 @@
+﻿@model watchAMovie.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-top:20px;" class="container">
+    <a href="@Url.Action("Index", "Movies")" class="btn btn-default pull-right">
+        <span class="fa fa-dashboard fa-fw  text-info"></span>Go to Movies
+    </a>
+</div>
+<div class="container" style="margin-top:20px;margin-left:100px;">
+    <div class="col-md-9">
+
+        <div class="thumbnail">
+            <img src="data:image/png;base64,@Convert.ToBase64String(Model.Picture, 0, Model.Picture.Length)" style="width: 350px; height: 300px;padding:20px;" alt="" />
+            <div class="caption-full">
+                <p>
+                    <dl class="dl-horizontal" style="color:#111;">
+                        <dt>
+                            @Html.Label("Theatre")
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.theatre.Theatre_name)
+                        </dd>
+                        <dt>
+                            @Html.Label("Movie Name")
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.MovieName)
+                        </dd>
+                        <dt>
+                            @Html.Label("Genre")
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Genre)
+                        </dd>
+                        <dt>
+                            @Html.Label("Description")
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt>
+                            @Html.Label("Showing Time")
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ShowingDate)
+                        </dd>
+                    </dl>
+                </p>
+
+            </div>
+        </div>
+        @Html.Partial("_MovieControl")
+    </div>
+</div>
+<div>
+</div>
